@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Bar, Pie } from "react-chartjs-2";
 import main from "../../main";
+import { toast, ToastContainer } from 'react-toastify';
 import {
     Chart as ChartJS,
     BarElement,
@@ -29,10 +30,13 @@ const CompareAnalysis = () => {
     
     const generateAnalysisText = async () => {
         setLoading(true);
-        // Simulate fetching text (replace this with an API call if needed)
+        try{
         const fetchedText = await run1(`dataset1 ${JSON.stringify(analysis1)}, dataset2 ${JSON.stringify(analysis2)}`);
-        
         setgeneratedText(fetchedText);
+        }
+        catch (error) {
+            toast.error("Error fetching data");
+        }
     };
     // Fetch data from API
     const fetchData = async () => {
@@ -48,16 +52,14 @@ const CompareAnalysis = () => {
                     time_period: timePeriod, // year, month, week
                     date: startDate2.toISOString().split("T")[0], // Format as YYYY-MM-DD
                 },
-            });
-            console.log(startDate1, startDate2 , timePeriod);
+            })
             const formattedData = formatData(response.data,1);
             setChartData1(formattedData);
-            console.log("Data fetched successfully:", formattedData);
             const formattedData1 = formatData(response1.data,2);
             setChartData2(formattedData1);
         } 
         catch (error) {
-            console.error("Error fetching data:", error);
+            toast.error("Error fetching data");
         }
     };
      // Initialize dictionary
@@ -71,7 +73,6 @@ const CompareAnalysis = () => {
         }
         return colors;
     };
-  2
     // Format data for the chart
     const formatData = (data,key) => {
         const labels = [];
@@ -213,6 +214,7 @@ const CompareAnalysis = () => {
                     </div>
                 )}
             </div>
+            <ToastContainer/>
         </div>
     );
 };

@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import run from "./FinanceAdivser.js";
 import ReactMarkdown from "react-markdown";
+import { toast, ToastContainer } from 'react-toastify';
 
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcElement);
@@ -43,9 +44,8 @@ const FinancialChart = () => {
             });
             const formattedData = formatData(response.data);
             setChartData(formattedData);
-            console.log("Data fetched successfully:", formattedData);
         } catch (error) {
-            console.error("Error fetching data:", error);
+            toast.error("Error fetching data");
         }
     };
 
@@ -207,46 +207,8 @@ const FinancialChart = () => {
                         </p>
                     </div>
                 )}
-
-                {/* Check if email exists and render the email form if present */}
-                {/* {email && (
-                    <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-green-100 border-l-4 border-green-500 rounded-lg shadow-md">
-                        <h3 className="text-lg font-semibold text-green-800 mb-2">
-                            Send an Email
-                        </h3>
-                        <form action={`mailto:${email}`} method="get">
-                            <div>
-                                <label htmlFor="email-subject" className="block text-sm font-medium text-gray-700">Subject</label>
-                                <input
-                                    type="text"
-                                    id="email-subject"
-                                    name="subject"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                                    placeholder="Subject of the email"
-                                    required
-                                />
-                            </div>
-                            <div className="mt-2">
-                                <label htmlFor="email-body" className="block text-sm font-medium text-gray-700">Body</label>
-                                <textarea
-                                    id="email-body"
-                                    name="body"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                                    placeholder="Your message"
-                                    rows="4"
-                                    required
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
-                            >
-                                Send Email
-                            </button>
-                        </form>
-                    </div>
-                )} */}
             </div>
+            <ToastContainer/>
         </div>
     );
 };

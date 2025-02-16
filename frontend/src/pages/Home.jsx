@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import { Navigate } from 'react-router-dom';
 import main from '../../main';
+import { toast, ToastContainer } from 'react-toastify';
 const FinanceTracker = () => {
     const [data, setData] = useState([]);
     const [maxPage, setMaxPage] = useState(0);
@@ -49,10 +50,10 @@ const FinanceTracker = () => {
                 },
             });
             setData(res.data); 
-            console.log(res.data);
+           
         // Ensure data is properly set
         } catch (err) {
-            console.log(err);
+            toast.error("Error fetching data");
         }
     };
     const getdata1 = async () => {
@@ -65,11 +66,11 @@ const FinanceTracker = () => {
             });
             setMaxPage(res.data.length); // Ensure data is properly set
         } catch (err) {
-            console.log(err);
+            toast.error("Error fetching data");
         }
     };
     useEffect(() => {
-        console.log("useEffect");
+      
         getdata1();
         checkLogin();
     }, [])
@@ -83,7 +84,7 @@ const FinanceTracker = () => {
             await main.delete(`main/data/delete/${id}/`);
             getdata();  // Refresh data after deletion
         } catch (err) {
-            console.log(err);
+            toast.error("Error deleting data");
         }
     };
 
@@ -99,14 +100,13 @@ const FinanceTracker = () => {
             });
 
             if (res.status === 201) {
-                alert("Data added successfully");
+                toast.success("Data added successfully");
                 getdata();  // Refresh data after adding
             } else {
-                alert("Error in adding data");
+                toast.error("Error adding data");
             }
         } catch (err) {
-            alert("Error in adding data");
-            console.log(err);
+           toast.error("Error adding data");    
         }
         setNewTransaction({
             CATEGORY_CHOICES: 'expense',
@@ -309,6 +309,7 @@ const FinanceTracker = () => {
                     </form>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     );
 };

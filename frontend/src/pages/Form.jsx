@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '/constant.js';
 import main from '/main.js';
 import { useAuth } from './AuthContext';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function Form({ route, method }) {
     const [username, setUsername] = useState('');
@@ -28,23 +29,21 @@ export default function Form({ route, method }) {
                 { username, email , password};
             
             const res = await main.post(route.endsWith('/') ? route : `${route}/`, requestData);
-
             
-            console.log(res.data);
+            
             
             if (res.data.access && res.data.refresh && method === 'login') {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                console.log(localStorage.getItem(ACCESS_TOKEN));
-                console.log(localStorage.getItem(REFRESH_TOKEN));
                 setIsLogin(true);
                 navigate('/');
             } else {
-                console.log(res.data);
+                console.log("User ");
                 navigate('/login');
             }
         } catch (err) {
-            alert(err);
+            console.log(err);
+            toast.error(err.response.data.detail);
         }
     };
 
@@ -111,6 +110,7 @@ export default function Form({ route, method }) {
                     </div>
                 </form>
             </div>
+            <ToastContainer/>
         </div>
     );
 }
