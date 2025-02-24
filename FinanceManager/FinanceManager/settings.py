@@ -99,7 +99,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FinanceManager.wsgi.application'
 
-# Database configuration with dj-database-url
+
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL', 
     'postgres://localhost'))

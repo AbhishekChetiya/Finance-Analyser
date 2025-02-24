@@ -22,7 +22,7 @@ export default function Form({ route, method }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
+        // try {
             // Adjust the request data based on the method (login or register)
             const requestData = method === 'login' ? 
                 { username, password } : 
@@ -30,21 +30,21 @@ export default function Form({ route, method }) {
             
             const res = await main.post(route.endsWith('/') ? route : `${route}/`, requestData);
             
+            console.log(res , "knk");
             
-            
-            if (res.data.access && res.data.refresh && method === 'login') {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                setIsLogin(true);
-                navigate('/');
-            } else {
-                console.log("User ");
-                navigate('/login');
-            }
-        } catch (err) {
-            console.log(err);
-            toast.error(err.response.data.detail);
-        }
+        //     if (res.data.access && res.data.refresh && method === 'login') {
+        //         localStorage.setItem(ACCESS_TOKEN, res.data.access);
+        //         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+        //         setIsLogin(true);
+        //         navigate('/');
+        //     } else {
+        //         console.log("User ");
+        //         navigate('/login');
+        //     }
+        // } catch (err) {
+        //     console.log(err);
+        //     // toast.error(err.response.data.detail);
+        // }
     };
 
     return (
