@@ -12,6 +12,8 @@ import {
 } from "chart.js";
 import run from "./FinanceAdivser.js";
 import ReactMarkdown from "react-markdown";
+import { toast , ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend, ArcElement);
@@ -43,9 +45,9 @@ const FinancialChart = () => {
             });
             const formattedData = formatData(response.data);
             setChartData(formattedData);
-            console.log("Data fetched successfully:", formattedData);
+            toast.success("Data fetched successfully");
         } catch (error) {
-            console.error("Error fetching data:", error);
+            toast.error("Error fetching data:", error);
         }
     };
 
@@ -247,6 +249,7 @@ const FinancialChart = () => {
                     </div>
                 )} */}
             </div>
+            <ToastContainer/>
         </div>
     );
 };

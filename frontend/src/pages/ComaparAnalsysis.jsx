@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Bar, Pie } from "react-chartjs-2";
+import { toast , ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import main from "../../main";
 import {
     Chart as ChartJS,
@@ -49,15 +51,15 @@ const CompareAnalysis = () => {
                     date: startDate2.toISOString().split("T")[0], // Format as YYYY-MM-DD
                 },
             });
-            console.log(startDate1, startDate2 , timePeriod);
+            
             const formattedData = formatData(response.data,1);
             setChartData1(formattedData);
-            console.log("Data fetched successfully:", formattedData);
+            toast.success("Data fetched successfully");
             const formattedData1 = formatData(response1.data,2);
             setChartData2(formattedData1);
         } 
         catch (error) {
-            console.error("Error fetching data:", error);
+            toast.error("Error fetching data", error);
         }
     };
      // Initialize dictionary
@@ -213,6 +215,7 @@ const CompareAnalysis = () => {
                     </div>
                 )}
             </div>
+            <ToastContainer/>
         </div>
     );
 };

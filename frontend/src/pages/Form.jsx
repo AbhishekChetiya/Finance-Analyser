@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '/constant.js';
 import main from '/main.js';
 import { useAuth } from './AuthContext';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function Form({ route, method }) {
     const [username, setUsername] = useState('');
@@ -40,11 +43,11 @@ export default function Form({ route, method }) {
                 setIsLogin(true);
                 navigate('/');
             } else {
-                console.log(res.data);
+                toast.success("Successfully register");
                 navigate('/login');
             }
         } catch (err) {
-            alert(err);
+            toast.success("Error Occur: ", err);
         }
     };
 
@@ -110,6 +113,7 @@ export default function Form({ route, method }) {
                         </button>
                     </div>
                 </form>
+                <ToastContainer/>
             </div>
         </div>
     );
